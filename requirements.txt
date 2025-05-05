@@ -1,0 +1,8 @@
+fastapi
+jinja2
+sqlalchemy
+pydantic
+uvicorn
+hypercorn
+requests
+python-dotenv

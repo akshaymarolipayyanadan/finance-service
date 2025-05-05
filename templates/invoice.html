@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Invoice Payment Portal</title>
+    {% include 'fragments/header.html' %}
+
+</head>
+<body>
+    {% include 'fragments/nav.html' %}
+    <div class="container-fluid">
+        <h3>Invoice</h3>
+        <dl class="row col-md-3">
+            <dt class="col-sm-9">Reference:</dt>
+            <dd class="col-sm-3">{{ invoice.reference }}</dd>
+
+            <dt class="col-sm-9">Student ID:</dt>
+            <dd class="col-sm-3">{{ invoice.account.student_id }}</dd>
+
+            <dt class="col-sm-9">Amount:</dt>
+            <!-- <dd class="col-sm-3"></dd> -->
+            <dd class="col-sm-3" style="white-space: nowrap;">£ {{ invoice.amount }}</dd>
+
+
+            <dt class="col-sm-9">Due Date:</dt>
+            <dd class="col-sm-3" style="white-space: nowrap;">{{ invoice.due_date | datetimeformat('%d %b %Y') }}</dd>
+
+            <dt class="col-sm-9">Type:</dt>
+            <dd class="col-sm-3">{{ invoice.type.value if invoice.type else '' }}</dd>
+
+            <dt class="col-sm-9">Status:</dt>
+            <dd class="col-sm-3">{{ invoice.status }}</dd>
+        </dl>
+
+        <div class="row">
+            <div class="btn-group">
+                <div class="col-xs-6">
+                    <a class="btn btn-secondary btn-block" href="/portal" role="button">Find Another Invoice</a>
+                </div>
+
+                <div class="col-xs-6">
+                    {% if invoice.status == 'OUTSTANDING' %}
+                    <form action="/portal/pay" method="post">
+                        <input type="hidden" name="reference" value="{{ invoice.reference }}">
+                        <button class="btn btn-primary btn-block" type="submit" name="pay" value="submit">Pay Invoice</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if message %}
+    <div class="container-fluid">
+
+        <div class="alert alert-success w-auto" style="white-space: nowrap;">{{ message }}</div>
+
+    </div>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,4 @@
+bind = "0.0.0.0:8081"
+use_reloader = true
+h2 = true         # Enable HTTP/2
+insecure_bind = "0.0.0.0:8081"  # Accept cleartext HTTP/2 (h2c)
